@@ -1,10 +1,12 @@
 package org.pragma.creditya.model.customer.valueobject;
 
+import lombok.Getter;
 import org.pragma.creditya.model.customer.exception.CustomerDomainException;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Getter
 public class BaseSalary {
 
     private final BigDecimal amount;
@@ -29,16 +31,11 @@ public class BaseSalary {
 
 
     private boolean isGreaterThanZero() {
-        System.out.println("Amount " + amount);
         return this.amount != null && this.amount.compareTo(BigDecimal.ZERO) > 0;
     }
 
     public boolean isGreaterThan(int limit) {
         return this.amount != null && this.amount.compareTo(BigDecimal.valueOf(limit)) > 0;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
     }
 
     @Override
