@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class CustomerMapperTest {
-
+    private final CustomCustomerMapper customCustomerMapper = new CustomCustomerMapper();
     private final String CUSTOMER_ID = "2501d95b-e2ee-4c5f-8c1e-72ecdfb24a2b";
 
     @Test
@@ -24,7 +24,7 @@ public class CustomerMapperTest {
         entity.setBaseSalary(new BigDecimal(10));
         entity.setPhone(null);
 
-        Customer customer = CustomerMapper.toDomain(entity);
+        Customer customer = customCustomerMapper.toEntity(entity);  // CustomerMapper.toDomain(entity);
 
         assertInstanceOf(CustomerId.class, customer.getId());
         assertEquals("2501d95b-e2ee-4c5f-8c1e-72ecdfb24a2b", customer.getId().getValue().toString());
@@ -40,8 +40,7 @@ public class CustomerMapperTest {
                 BigDecimal.valueOf(100),
                 "310");
 
-        CustomerEntity entity = CustomerMapper.toEntity(domain);
-
+        CustomerEntity entity = customCustomerMapper.toData(domain);  //CustomerMapper.toEntity(domain);
         assertEquals("2501d95b-e2ee-4c5f-8c1e-72ecdfb24a2b", entity.getCustomerId().toString());
     }
 
