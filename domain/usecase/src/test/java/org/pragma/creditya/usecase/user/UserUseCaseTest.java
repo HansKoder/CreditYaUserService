@@ -2,7 +2,9 @@ package org.pragma.creditya.usecase.user;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.pragma.creditya.model.user.exception.UserDomainException;
+import org.pragma.creditya.model.user.gateways.UserRepository;
 import org.pragma.creditya.usecase.user.command.CreateUserCommand;
 import reactor.test.StepVerifier;
 
@@ -11,10 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserUseCaseTest {
 
     private UserUseCase userUseCase;
+    private UserRepository userRepository;
 
     @BeforeEach
     void setup () {
-        userUseCase = new UserUseCase();
+        userRepository = Mockito.mock(UserRepository.class);
+        userUseCase = new UserUseCase(userRepository);
     }
 
     @Test
