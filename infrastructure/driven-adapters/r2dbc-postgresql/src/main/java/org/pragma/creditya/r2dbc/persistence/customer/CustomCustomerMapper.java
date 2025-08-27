@@ -1,11 +1,14 @@
-package org.pragma.creditya.r2dbc.mapper;
+package org.pragma.creditya.r2dbc.persistence.customer;
 
 import org.pragma.creditya.model.customer.Customer;
-import org.pragma.creditya.r2dbc.entity.CustomerEntity;
+import org.pragma.creditya.r2dbc.helper.CustomMapper;
+import org.springframework.stereotype.Component;
 
-public class CustomerMapper  {
+@Component
+public class CustomCustomerMapper implements CustomMapper<Customer, CustomerEntity> {
 
-    public static CustomerEntity toEntity(Customer entity) {
+    @Override
+    public CustomerEntity toData(Customer entity) {
         CustomerEntity data = new CustomerEntity();
         data.setCustomerId(entity.getId().getValue());
         data.setEmail(entity.getEmail().value());
@@ -17,7 +20,8 @@ public class CustomerMapper  {
         return data;
     }
 
-    public static Customer toDomain(CustomerEntity data) {
+    @Override
+    public Customer toEntity(CustomerEntity data) {
         return Customer.rebuild(
                 data.getCustomerId(),
                 data.getName(),
@@ -27,6 +31,4 @@ public class CustomerMapper  {
                 data.getPhone()
         );
     }
-
-
 }

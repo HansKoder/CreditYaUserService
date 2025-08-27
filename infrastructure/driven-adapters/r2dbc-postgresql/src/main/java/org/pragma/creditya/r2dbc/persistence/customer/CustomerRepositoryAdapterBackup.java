@@ -1,17 +1,16 @@
-package org.pragma.creditya.r2dbc;
+package org.pragma.creditya.r2dbc.persistence.customer;
 
 import org.pragma.creditya.model.customer.Customer;
 import org.pragma.creditya.model.customer.gateways.CustomerRepository;
-import org.pragma.creditya.r2dbc.mapper.CustomerMapper;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
-public class CustomerRepositoryAdapter implements CustomerRepository {
+public class CustomerRepositoryAdapterBackup implements CustomerRepository {
 
     private final CustomerReactiveRepository repository;
 
-    public CustomerRepositoryAdapter(CustomerReactiveRepository repository) {
+    public CustomerRepositoryAdapterBackup(CustomerReactiveRepository repository) {
         this.repository = repository;
     }
 

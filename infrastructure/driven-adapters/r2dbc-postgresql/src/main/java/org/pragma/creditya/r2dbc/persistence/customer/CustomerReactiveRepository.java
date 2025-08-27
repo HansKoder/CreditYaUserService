@@ -1,6 +1,5 @@
-package org.pragma.creditya.r2dbc;
+package org.pragma.creditya.r2dbc.persistence.customer;
 
-import org.pragma.creditya.r2dbc.entity.CustomerEntity;
 import org.springframework.data.repository.query.ReactiveQueryByExampleExecutor;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 

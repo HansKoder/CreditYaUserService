@@ -10,14 +10,14 @@ import reactor.core.publisher.Mono;
 import java.lang.reflect.ParameterizedType;
 import java.util.function.Function;
 
-public abstract class ReactiveAdapterOperations<E, D, I, R extends ReactiveCrudRepository<D, I> & ReactiveQueryByExampleExecutor<D>> {
+public abstract class ReactiveAdapterOperationsBackup<E, D, I, R extends ReactiveCrudRepository<D, I> & ReactiveQueryByExampleExecutor<D>> {
     protected R repository;
-    protected CustomMapper<E, D> mapper;
+    protected ObjectMapper mapper;
     private final Class<D> dataClass;
     private final Function<D, E> toEntityFn;
 
     @SuppressWarnings("unchecked")
-    protected ReactiveAdapterOperations(R repository, CustomMapper<E, D> mapper, Function<D, E> toEntityFn) {
+    protected ReactiveAdapterOperationsBackup(R repository, ObjectMapper mapper, Function<D, E> toEntityFn) {
         this.repository = repository;
         this.mapper = mapper;
         ParameterizedType genericSuperclass = (ParameterizedType) this.getClass().getGenericSuperclass();
@@ -26,8 +26,7 @@ public abstract class ReactiveAdapterOperations<E, D, I, R extends ReactiveCrudR
     }
 
     protected D toData(E entity) {
-        return mapper.toData(entity);
-        // return mapper.map(entity, dataClass);
+        return mapper.map(entity, dataClass);
     }
 
     protected E toEntity(D data) {
