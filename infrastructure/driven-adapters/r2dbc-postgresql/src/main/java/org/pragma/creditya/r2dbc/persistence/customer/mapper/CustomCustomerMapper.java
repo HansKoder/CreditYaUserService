@@ -1,7 +1,8 @@
-package org.pragma.creditya.r2dbc.persistence.customer;
+package org.pragma.creditya.r2dbc.persistence.customer.mapper;
 
 import org.pragma.creditya.model.customer.Customer;
 import org.pragma.creditya.r2dbc.helper.CustomMapper;
+import org.pragma.creditya.r2dbc.persistence.customer.entity.CustomerEntity;
 import org.springframework.stereotype.Component;
 
 @Component

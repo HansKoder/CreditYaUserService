@@ -18,4 +18,5 @@ public class User extends AggregateRoot<UserName> {
     public static User create(String username, String password) {
         return new User(new UserName(username), new Password(password));
     }
+
 }

@@ -1,7 +1,10 @@
-package org.pragma.creditya.r2dbc.persistence.customer;
+package org.pragma.creditya.r2dbc.persistence.customer.adapter;
 
 import org.pragma.creditya.model.customer.Customer;
 import org.pragma.creditya.r2dbc.helper.ReactiveAdapterOperations;
+import org.pragma.creditya.r2dbc.persistence.customer.entity.CustomerEntity;
+import org.pragma.creditya.r2dbc.persistence.customer.mapper.CustomCustomerMapper;
+import org.pragma.creditya.r2dbc.persistence.customer.repository.CustomerReactiveRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;

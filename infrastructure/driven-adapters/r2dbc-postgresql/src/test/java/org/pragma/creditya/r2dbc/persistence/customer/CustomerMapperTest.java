@@ -3,6 +3,8 @@ package org.pragma.creditya.r2dbc.persistence.customer;
 import org.junit.jupiter.api.Test;
 import org.pragma.creditya.model.customer.Customer;
 import org.pragma.creditya.model.customer.valueobject.CustomerId;
+import org.pragma.creditya.r2dbc.persistence.customer.entity.CustomerEntity;
+import org.pragma.creditya.r2dbc.persistence.customer.mapper.CustomCustomerMapper;
 
 import java.math.BigDecimal;
 import java.util.UUID;
