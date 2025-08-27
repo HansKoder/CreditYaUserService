@@ -1,34 +1,32 @@
 package org.pragma.creditya.r2dbc.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Entity
-@Table(name = "customers")
+@Table(name = "customers", schema = "public")
 @Getter
 @Setter
 @ToString
 public class CustomerEntity {
 
     @Id
-    @Column(name = "customer_id")
+    @Column(value = "customer_id")
     private UUID customerId;
 
     private String name;
 
-    @Column(name = "last_name")
+    @Column(value = "last_name")
     private String lastName;
     private String phone;
     private String email;
 
-    @Column(name = "base_salary")
+    @Column(value = "base_salary")
     private BigDecimal baseSalary;
 }

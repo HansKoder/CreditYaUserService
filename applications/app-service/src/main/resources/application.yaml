@@ -15,7 +15,7 @@ spring:
 
 adapters:
   r2dbc:
-    host: "${POSTGRES_HOST:postgres}"
+    host: "${POSTGRES_HOST:localhost}"
     port: "${POSTGRES_PORT:5432}"
     database: "${POSTGRES_DB:credit_user_db}"
     schema: "public"

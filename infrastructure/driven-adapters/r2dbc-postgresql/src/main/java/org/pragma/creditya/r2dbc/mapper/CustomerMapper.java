@@ -2,32 +2,31 @@ package org.pragma.creditya.r2dbc.mapper;
 
 import org.pragma.creditya.model.customer.Customer;
 import org.pragma.creditya.r2dbc.entity.CustomerEntity;
-import org.springframework.stereotype.Component;
 
-@Component
-public class CustomerMapper implements DomainDataMapper<Customer, CustomerEntity> {
+public class CustomerMapper  {
 
-    @Override
-    public CustomerEntity toData(Customer customer) {
-        CustomerEntity entity = new CustomerEntity();
-        entity.setCustomerId(customer.getId().getValue());
-        entity.setEmail(customer.getEmail().value());
-        entity.setName(customer.getFullName().name());
-        entity.setLastName(customer.getFullName().lastName());
-        entity.setBaseSalary(customer.getBaseSalary().getAmount());
-        entity.setPhone(customer.getPhone().value());
-        return entity;
+    public static CustomerEntity toEntity(Customer entity) {
+        CustomerEntity data = new CustomerEntity();
+        data.setCustomerId(entity.getId().getValue());
+        data.setEmail(entity.getEmail().value());
+        data.setName(entity.getFullName().name());
+        data.setLastName(entity.getFullName().lastName());
+        data.setBaseSalary(entity.getBaseSalary().getAmount());
+        data.setPhone(entity.getPhone().value());
+
+        return data;
     }
 
-    @Override
-    public Customer toDomain(CustomerEntity entity) {
+    public static Customer toDomain(CustomerEntity data) {
         return Customer.rebuild(
-                entity.getCustomerId(),
-                entity.getName(),
-                entity.getLastName(),
-                entity.getEmail(),
-                entity.getBaseSalary(),
-                entity.getPhone()
+                data.getCustomerId(),
+                data.getName(),
+                data.getLastName(),
+                data.getEmail(),
+                data.getBaseSalary(),
+                data.getPhone()
         );
     }
+
+
 }
