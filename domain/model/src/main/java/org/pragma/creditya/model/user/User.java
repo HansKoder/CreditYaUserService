@@ -1,14 +1,21 @@
 package org.pragma.creditya.model.user;
-import lombok.Builder;
-import lombok.AllArgsConstructor;
+
+
 import lombok.Getter;
-//import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.pragma.creditya.model.shared.domain.model.entity.AggregateRoot;
+import org.pragma.creditya.model.user.valueobject.Password;
+import org.pragma.creditya.model.user.valueobject.UserName;
 
 @Getter
-@Setter
-//@NoArgsConstructor
-@AllArgsConstructor
-@Builder(toBuilder = true)
-public class User {
+public class User extends AggregateRoot<UserName> {
+    private final Password password;
+
+    private User(UserName userName, Password password) {
+        setId(userName);
+        this.password = password;
+    }
+
+    public static User create(String username, String password) {
+        return new User(new UserName(username), new Password(password));
+    }
 }
