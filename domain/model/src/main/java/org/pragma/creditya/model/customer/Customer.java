@@ -1,6 +1,7 @@
 package org.pragma.creditya.model.customer;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.pragma.creditya.model.customer.valueobject.*;
 import org.pragma.creditya.model.shared.domain.model.entity.AggregateRoot;
 
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Getter
+@ToString
 public class Customer extends AggregateRoot<CustomerId> {
 
     private final Email email;

@@ -2,11 +2,11 @@ package org.pragma.creditya.usecase.customer;
 
 import lombok.RequiredArgsConstructor;
 import org.pragma.creditya.model.customer.Customer;
+import org.pragma.creditya.model.customer.event.CustomerCreatedEvent;
 import org.pragma.creditya.model.customer.exception.EmailUsedByOtherUserException;
 import org.pragma.creditya.model.customer.gateways.CustomerRepository;
 import org.pragma.creditya.model.customer.valueobject.CustomerId;
 import org.pragma.creditya.usecase.customer.command.CreateCustomerCommand;
-import org.pragma.creditya.usecase.customer.ports.in.ICustomerUseCase;
 import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
@@ -19,6 +19,7 @@ public class CustomerUseCase implements ICustomerUseCase {
                 .map(this::checkCustomer)
                 .flatMap(this::checkEmail)
                 .flatMap(customerRepository::save)
+                .log("Producer consumer ...")
                 .map(Customer::getId);
     }
 
@@ -27,7 +28,7 @@ public class CustomerUseCase implements ICustomerUseCase {
     }
 
     private Mono<Customer> checkEmail (Customer customer) {
-        return customerRepository.exitstByeEmail(customer.getEmail().value())
+        return customerRepository.exitsByeEmail(customer.getEmail().value())
                 .flatMap(exist -> {
                     if (exist)
                         return Mono.error(new EmailUsedByOtherUserException(customer.getEmail().value()));

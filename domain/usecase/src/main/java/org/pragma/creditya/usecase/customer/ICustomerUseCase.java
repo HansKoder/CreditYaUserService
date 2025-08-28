@@ -1,4 +1,4 @@
-package org.pragma.creditya.usecase.customer.ports.in;
+package org.pragma.creditya.usecase.customer;
 
 import org.pragma.creditya.model.customer.valueobject.CustomerId;
 import org.pragma.creditya.usecase.customer.command.CreateCustomerCommand;

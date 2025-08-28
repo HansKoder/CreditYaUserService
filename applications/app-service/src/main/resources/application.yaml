@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9081
 spring:
   application:
     name: "CreditYaUserService"
@@ -12,7 +12,6 @@ spring:
   profiles:
     include: null
 
-
 adapters:
   r2dbc:
     host: "${POSTGRES_HOST:localhost}"
@@ -21,6 +20,7 @@ adapters:
     schema: "public"
     username: "${POSTGRES_USER:credit_user}"
     password: "${POSTGRES_PASSWORD:credit_pass}"
+
 management:
   endpoints:
     web:

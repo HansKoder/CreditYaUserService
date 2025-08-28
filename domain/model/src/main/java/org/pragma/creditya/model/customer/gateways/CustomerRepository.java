@@ -6,5 +6,5 @@ import reactor.core.publisher.Mono;
 public interface CustomerRepository {
 
     Mono<Customer> save (Customer customer);
-    Mono<Boolean> exitstByeEmail (String email);
+    Mono<Boolean> exitsByeEmail (String email);
 }

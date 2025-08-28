@@ -7,7 +7,6 @@ import org.pragma.creditya.r2dbc.persistence.customer.entity.CustomerEntity;
 import org.pragma.creditya.r2dbc.persistence.customer.mapper.CustomCustomerMapper;
 import org.pragma.creditya.r2dbc.persistence.customer.repository.CustomerReactiveRepository;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
@@ -26,7 +25,7 @@ public class CustomerRepositoryAdapter extends ReactiveAdapterOperations<
     }
 
     @Override
-    public Mono<Boolean> exitstByeEmail(String email) {
+    public Mono<Boolean> exitsByeEmail(String email) {
         CustomerEntity probe = new CustomerEntity();
         probe.setEmail(email);
 
