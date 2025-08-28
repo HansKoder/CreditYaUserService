@@ -3,8 +3,6 @@ package org.pragma.creditya.api;
 import org.pragma.creditya.api.dto.response.ErrorResponse;
 import org.pragma.creditya.model.customer.exception.CustomerDomainException;
 import org.pragma.creditya.model.customer.exception.EmailUsedByOtherUserException;
-import org.springframework.beans.factory.parsing.Problem;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -13,14 +11,14 @@ import org.springframework.web.reactive.function.server.HandlerFilterFunction;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
-public class RouterRest {
+public class CustomerRouterRest {
+
     @Bean
-    public RouterFunction<ServerResponse> routerFunction(Handler handler) {
+    public RouterFunction<ServerResponse> routerFunction(CustomerHandler handler) {
         return route(POST("/api/users"), handler::createCustomer)
                 .filter(domainErrorMapper());
     }

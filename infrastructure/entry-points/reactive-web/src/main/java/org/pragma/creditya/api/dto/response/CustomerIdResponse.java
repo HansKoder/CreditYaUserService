@@ -1,4 +1,5 @@
 package org.pragma.creditya.api.dto.response;
 
-public record CustomerIdResponse (String customerId) {
+public record CustomerIdResponse (
+        String customerId) {
 }
