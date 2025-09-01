@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
-
 public class CustomerMapperTest {
     private final CustomCustomerMapper customCustomerMapper = new CustomCustomerMapper();
     private final String CUSTOMER_ID = "2501d95b-e2ee-4c5f-8c1e-72ecdfb24a2b";
@@ -24,6 +23,7 @@ public class CustomerMapperTest {
         entity.setLastName("doe");
         entity.setEmail("doe@gmail.com");
         entity.setBaseSalary(new BigDecimal(10));
+        entity.setDocument("103");
         entity.setPhone(null);
 
         Customer customer = customCustomerMapper.toEntity(entity);  // CustomerMapper.toDomain(entity);

@@ -2,6 +2,7 @@ package org.pragma.creditya.api;
 
 import org.pragma.creditya.api.dto.response.ErrorResponse;
 import org.pragma.creditya.model.customer.exception.CustomerDomainException;
+import org.pragma.creditya.model.customer.exception.DocumentIsUsedByOtherCustomerException;
 import org.pragma.creditya.model.customer.exception.EmailUsedByOtherUserException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,9 @@ public class CustomerRouterRest {
                                         .bodyValue(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()))
                         )
                         .onErrorResume(EmailUsedByOtherUserException.class, ex ->
+                                ServerResponse.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage())))
+                        .onErrorResume(DocumentIsUsedByOtherCustomerException.class, ex ->
                                 ServerResponse.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON)
                                         .bodyValue(new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage())))
                         .onErrorResume(Exception.class, ex ->
