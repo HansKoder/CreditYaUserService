@@ -15,8 +15,8 @@ import java.util.UUID;
 
 @Repository
 public class CustomerRepositoryAdapter extends ReactiveAdapterOperations<
-        Customer/* change for domain model */,
-        CustomerEntity/* change for adapter model */,
+        Customer,
+        CustomerEntity,
         UUID,
         CustomerReactiveRepository
         > implements CustomerRepository {
@@ -25,10 +25,19 @@ public class CustomerRepositoryAdapter extends ReactiveAdapterOperations<
     }
 
     @Override
-    public Mono<Boolean> exitsByeEmail(String email) {
+    public Mono<Boolean> existByEmail(String email) {
         CustomerEntity probe = new CustomerEntity();
         probe.setEmail(email);
 
         return repository.exists(Example.of(probe));
+    }
+
+    @Override
+    public Mono<Boolean> existByDocument(String document) {
+        CustomerEntity probe = new CustomerEntity();
+        probe.setDocument(document);
+
+        return repository.exists(Example.of(probe));
+
     }
 }
