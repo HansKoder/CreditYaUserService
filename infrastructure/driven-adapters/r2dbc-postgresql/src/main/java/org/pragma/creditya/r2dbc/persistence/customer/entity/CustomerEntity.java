@@ -27,6 +27,8 @@ public class CustomerEntity {
     private String phone;
     private String email;
 
+    private String document;
+
     @Column(value = "base_salary")
     private BigDecimal baseSalary;
 }

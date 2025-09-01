@@ -7,5 +7,6 @@ public record CreateCustomerRequest (
         String lastName,
         String email,
         String phone,
-        BigDecimal baseSalary
+        BigDecimal baseSalary,
+        String document
 ) { }

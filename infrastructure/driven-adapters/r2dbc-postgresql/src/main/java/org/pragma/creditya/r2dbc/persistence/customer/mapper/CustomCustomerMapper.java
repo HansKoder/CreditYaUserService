@@ -17,6 +17,7 @@ public class CustomCustomerMapper implements CustomMapper<Customer, CustomerEnti
         data.setLastName(entity.getFullName().lastName());
         data.setBaseSalary(entity.getBaseSalary().getAmount());
         data.setPhone(entity.getPhone().value());
+        data.setDocument(entity.getDocument().value());
 
         return data;
     }
@@ -29,6 +30,7 @@ public class CustomCustomerMapper implements CustomMapper<Customer, CustomerEnti
                 data.getLastName(),
                 data.getEmail(),
                 data.getBaseSalary(),
+                data.getDocument(),
                 data.getPhone()
         );
     }

@@ -7,5 +7,6 @@ public record CreateCustomerCommand (
         String lastName,
         String email,
         String phone,
-        BigDecimal baseSalary
+        BigDecimal baseSalary,
+        String document
 ) { }

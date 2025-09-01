@@ -40,7 +40,7 @@ public class CustomerMapperTest {
                 "doe",
                 "doe@gmail.com",
                 BigDecimal.valueOf(100),
-                "310");
+                "310", "882");
 
         CustomerEntity entity = customCustomerMapper.toData(domain);  //CustomerMapper.toEntity(domain);
         assertEquals("2501d95b-e2ee-4c5f-8c1e-72ecdfb24a2b", entity.getCustomerId().toString());

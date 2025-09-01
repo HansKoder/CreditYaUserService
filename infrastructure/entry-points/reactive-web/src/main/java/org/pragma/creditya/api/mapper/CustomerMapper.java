@@ -13,7 +13,8 @@ public class CustomerMapper {
                 request.lastName(),
                 request.email(),
                 request.phone(),
-                request.baseSalary());
+                request.baseSalary(),
+                request.document());
     }
 
     public static CustomerIdResponse toResponse (CustomerId customerId) {

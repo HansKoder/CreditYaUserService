@@ -2,7 +2,6 @@ package org.pragma.creditya.usecase.customer;
 
 import lombok.RequiredArgsConstructor;
 import org.pragma.creditya.model.customer.Customer;
-import org.pragma.creditya.model.customer.event.CustomerCreatedEvent;
 import org.pragma.creditya.model.customer.exception.EmailUsedByOtherUserException;
 import org.pragma.creditya.model.customer.gateways.CustomerRepository;
 import org.pragma.creditya.model.customer.valueobject.CustomerId;
@@ -24,7 +23,7 @@ public class CustomerUseCase implements ICustomerUseCase {
     }
 
     private Customer checkCustomer (CreateCustomerCommand cmd) {
-        return Customer.create(cmd.name(), cmd.lastName(), cmd.email(), cmd.baseSalary(), cmd.phone());
+        return Customer.create(cmd.name(), cmd.lastName(), cmd.email(), cmd.baseSalary(), cmd.phone(), cmd.document());
     }
 
     private Mono<Customer> checkEmail (Customer customer) {

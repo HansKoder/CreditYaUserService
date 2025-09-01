@@ -3,6 +3,7 @@ package org.pragma.creditya.usecase.customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.pragma.creditya.model.customer.exception.CustomerDomainException;
@@ -20,6 +21,7 @@ public class CustomerUseCaseTest {
     @Mock
     private CustomerRepository customerRepository;
 
+    @InjectMocks
     private CustomerUseCase customerUseCase;
 
     @BeforeEach
@@ -29,7 +31,7 @@ public class CustomerUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenNameIsRequired () {
-        CreateCustomerCommand cmd = new CreateCustomerCommand(null, "doe", "doe.@gmail.com", null, BigDecimal.valueOf(1));
+        CreateCustomerCommand cmd = new CreateCustomerCommand(null, "doe", "doe.@gmail.com", null, BigDecimal.valueOf(1), "1142");
         StepVerifier.create(customerUseCase.createCustomer(cmd))
                 .expectErrorSatisfies(throwable -> {
                     assertEquals("Name is mandatory", throwable.getMessage());
@@ -40,7 +42,7 @@ public class CustomerUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenLastNameIsRequired () {
-        CreateCustomerCommand cmd = new CreateCustomerCommand("doe", " ", "doe.@gmail.com", null, BigDecimal.valueOf(1));
+        CreateCustomerCommand cmd = new CreateCustomerCommand("doe", " ", "doe.@gmail.com", null, BigDecimal.valueOf(1), "1142");
         StepVerifier.create(customerUseCase.createCustomer(cmd))
                 .expectErrorSatisfies(throwable -> {
                     assertEquals("LastName is mandatory", throwable.getMessage());
@@ -51,7 +53,7 @@ public class CustomerUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenEmailIsRequired () {
-        CreateCustomerCommand cmd = new CreateCustomerCommand("doe", "doe", " ", null, BigDecimal.valueOf(1));
+        CreateCustomerCommand cmd = new CreateCustomerCommand("doe", "doe", " ", null, BigDecimal.valueOf(1), "112");
         StepVerifier.create(customerUseCase.createCustomer(cmd))
                 .expectErrorSatisfies(throwable -> {
                     assertEquals("Email is mandatory", throwable.getMessage());
@@ -62,7 +64,7 @@ public class CustomerUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenEmailHasInvalidFormat () {
-        CreateCustomerCommand cmd = new CreateCustomerCommand("doe", "doe", "doe.123", null, BigDecimal.valueOf(1));
+        CreateCustomerCommand cmd = new CreateCustomerCommand("doe", "doe", "doe.123", null, BigDecimal.valueOf(1), "123");
         StepVerifier.create(customerUseCase.createCustomer(cmd))
                 .expectErrorSatisfies(throwable -> {
                     assertEquals("The email format is invalid, must have this structure example@account.com", throwable.getMessage());
@@ -74,7 +76,7 @@ public class CustomerUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenBaseSalaryIsNegative () {
-        CreateCustomerCommand cmd = new CreateCustomerCommand("doe", "doe", "doe@gmail.com", null, BigDecimal.valueOf(-100));
+        CreateCustomerCommand cmd = new CreateCustomerCommand("doe", "doe", "doe@gmail.com", null, BigDecimal.valueOf(-100), "113");
         StepVerifier.create(customerUseCase.createCustomer(cmd))
                 .expectErrorSatisfies(throwable -> {
                     assertEquals("Base Salary Must be positive", throwable.getMessage());
