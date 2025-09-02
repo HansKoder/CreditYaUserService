@@ -2,11 +2,14 @@ package org.pragma.creditya.usecase.customer;
 
 import lombok.RequiredArgsConstructor;
 import org.pragma.creditya.model.customer.Customer;
+import org.pragma.creditya.model.customer.exception.CustomerDomainException;
 import org.pragma.creditya.model.customer.exception.DocumentIsUsedByOtherCustomerException;
 import org.pragma.creditya.model.customer.exception.EmailUsedByOtherUserException;
 import org.pragma.creditya.model.customer.gateways.CustomerRepository;
 import org.pragma.creditya.model.customer.valueobject.CustomerId;
+import org.pragma.creditya.model.customer.valueobject.Document;
 import org.pragma.creditya.usecase.customer.command.CreateCustomerCommand;
+import org.pragma.creditya.usecase.customer.query.ExistDocumentQuery;
 import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
@@ -21,6 +24,20 @@ public class CustomerUseCase implements ICustomerUseCase {
                 .flatMap(this::checkDocument)
                 .flatMap(customerRepository::save)
                 .map(Customer::getId);
+    }
+
+    @Override
+    public Mono<Boolean> queryCustomerExistByDocument(ExistDocumentQuery query) {
+        return Mono.just(query)
+                .map(this::checkParamDocument)
+                .flatMap(customerRepository::existByDocument);
+    }
+
+    private String checkParamDocument (ExistDocumentQuery query) {
+        if (query == null || query.document() == null || query.document().isBlank())
+            throw new CustomerDomainException("Document is missed");
+
+        return query.document();
     }
 
     private Customer checkCustomer (CreateCustomerCommand cmd) {

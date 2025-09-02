@@ -1,8 +1,6 @@
 package org.pragma.creditya.api;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.pragma.creditya.api.dto.request.CreateCustomerRequest;
 import org.pragma.creditya.api.dto.response.CustomerIdResponse;
 import org.pragma.creditya.api.dto.response.ErrorResponse;
@@ -29,7 +27,7 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {CustomerRouterRest.class, CustomerHandler.class})
 @WebFluxTest
-class CustomerRouterRestTest {
+class CreateCustomerRouterTest {
 
     @Autowired
     private WebTestClient webTestClient;
