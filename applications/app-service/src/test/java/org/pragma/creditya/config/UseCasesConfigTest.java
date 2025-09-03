@@ -1,6 +1,8 @@
 package org.pragma.creditya.config;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.pragma.creditya.model.customer.gateways.CustomerRepository;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +36,12 @@ public class UseCasesConfigTest {
         public MyUseCase myUseCase() {
             return new MyUseCase();
         }
+
+        @Bean
+        public CustomerRepository mockRepository () {
+            return Mockito.mock(CustomerRepository.class);
+        }
+
     }
 
     static class MyUseCase {

@@ -1,0 +1,22 @@
+meta {
+  name: CreateCustomer
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:9081/api/users
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Hans",
+    "lastName": "Arias",
+    "email":"hans@gmail.com",
+    "baseSalary": 10,
+    "phone": "(57) 30000023",
+    "document": "11438495"
+  }
+}

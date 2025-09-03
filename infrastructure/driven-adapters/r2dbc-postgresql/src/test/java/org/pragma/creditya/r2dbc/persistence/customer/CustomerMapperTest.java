@@ -1,0 +1,49 @@
+package org.pragma.creditya.r2dbc.persistence.customer;
+
+import org.junit.jupiter.api.Test;
+import org.pragma.creditya.model.customer.Customer;
+import org.pragma.creditya.model.customer.valueobject.CustomerId;
+import org.pragma.creditya.r2dbc.persistence.customer.entity.CustomerEntity;
+import org.pragma.creditya.r2dbc.persistence.customer.mapper.CustomCustomerMapper;
+
+import java.math.BigDecimal;
+import java.util.UUID;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CustomerMapperTest {
+    private final CustomCustomerMapper customCustomerMapper = new CustomCustomerMapper();
+    private final String CUSTOMER_ID = "2501d95b-e2ee-4c5f-8c1e-72ecdfb24a2b";
+
+    @Test
+    void shouldMapperToDomain () {
+        CustomerEntity entity = new CustomerEntity();
+
+        entity.setCustomerId(UUID.fromString(CUSTOMER_ID));
+        entity.setName("jhon");
+        entity.setLastName("doe");
+        entity.setEmail("doe@gmail.com");
+        entity.setBaseSalary(new BigDecimal(10));
+        entity.setDocument("103");
+        entity.setPhone(null);
+
+        Customer customer = customCustomerMapper.toEntity(entity);  // CustomerMapper.toDomain(entity);
+
+        assertInstanceOf(CustomerId.class, customer.getId());
+        assertEquals("2501d95b-e2ee-4c5f-8c1e-72ecdfb24a2b", customer.getId().getValue().toString());
+    }
+
+    @Test
+    void shouldMapperToEntity () {
+        Customer domain = Customer.rebuild(
+                UUID.fromString(CUSTOMER_ID),
+                "jhon",
+                "doe",
+                "doe@gmail.com",
+                BigDecimal.valueOf(100),
+                "310", "882");
+
+        CustomerEntity entity = customCustomerMapper.toData(domain);  //CustomerMapper.toEntity(domain);
+        assertEquals("2501d95b-e2ee-4c5f-8c1e-72ecdfb24a2b", entity.getCustomerId().toString());
+    }
+
+}
