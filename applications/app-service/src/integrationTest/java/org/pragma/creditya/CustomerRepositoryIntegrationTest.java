@@ -78,7 +78,8 @@ public class CustomerRepositoryIntegrationTest {
 
         StepVerifier.create(repository.save(entity))
                 .expectNextMatches(persisted -> !Objects.isNull(persisted)
-                        && persisted.getId() != null
+                        && persisted.getId().getValue() != null
+                        && persisted.getId().getValue().toString().equals("2501d95b-e2ee-4c5f-8c1e-72ecdfb24a2b")
                         && persisted.getDocument() != null
                 )
                 .verifyComplete();
