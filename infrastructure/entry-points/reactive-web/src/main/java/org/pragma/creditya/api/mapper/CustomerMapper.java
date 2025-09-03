@@ -2,8 +2,10 @@ package org.pragma.creditya.api.mapper;
 
 import org.pragma.creditya.api.dto.request.CreateCustomerRequest;
 import org.pragma.creditya.api.dto.response.CustomerIdResponse;
+import org.pragma.creditya.api.dto.response.ExistCustomerDocumentResponse;
 import org.pragma.creditya.model.customer.valueobject.CustomerId;
 import org.pragma.creditya.usecase.customer.command.CreateCustomerCommand;
+import org.pragma.creditya.usecase.customer.query.ExistDocumentQuery;
 
 public class CustomerMapper {
 
@@ -19,6 +21,14 @@ public class CustomerMapper {
 
     public static CustomerIdResponse toResponse (CustomerId customerId) {
         return new CustomerIdResponse(customerId.getValue().toString());
+    }
+
+    public static ExistDocumentQuery toQuery (String document) {
+        return new ExistDocumentQuery(document);
+    }
+
+    public static ExistCustomerDocumentResponse toResponse (Boolean exist) {
+        return new ExistCustomerDocumentResponse(exist);
     }
 
 }
