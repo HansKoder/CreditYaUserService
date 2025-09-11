@@ -8,5 +8,6 @@ public interface CustomerRepository {
     Mono<Customer> save (Customer customer);
     Mono<Boolean> existByEmail (String email);
     Mono<Boolean> existByDocument (String document);
+    Mono<Customer> customerAllowedRequestLoan (String email, String document);
 
 }

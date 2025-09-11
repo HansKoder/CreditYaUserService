@@ -5,6 +5,7 @@ import org.pragma.creditya.api.exception.InfrastructureException;
 import org.pragma.creditya.model.customer.exception.CustomerDomainException;
 import org.pragma.creditya.model.customer.exception.DocumentIsUsedByOtherCustomerException;
 import org.pragma.creditya.model.customer.exception.EmailUsedByOtherUserException;
+import org.pragma.creditya.model.customer.exception.OwnerShipValidationFailedException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,9 @@ public class CustomerRouterRest {
                 .filter(domainErrorHandlers())
                 .filter(infrastructureErrorHandlers())
                 .andRoute(GET("/api/users/exists"), handler::existCustomerByDocument)
-                .filter(infrastructureErrorHandlers());
+                .filter(infrastructureErrorHandlers())
+                .andRoute(GET("/api/v1/users/verify-ownership-customer"), handler::verifyOwnershipCustomer)
+                .filter(verifyOwnershipCustomerHandlerExceptions());
     }
 
     private HandlerFilterFunction<ServerResponse, ServerResponse> domainErrorHandlers() {
@@ -58,5 +61,17 @@ public class CustomerRouterRest {
                         );
     }
 
+    private HandlerFilterFunction<ServerResponse, ServerResponse> verifyOwnershipCustomerHandlerExceptions() {
+        return (request, next) ->
+                next.handle(request)
+                        .onErrorResume(CustomerDomainException.class, ex ->
+                                ServerResponse.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()))
+                        )
+                        .onErrorResume(OwnerShipValidationFailedException.class, ex ->
+                                ServerResponse.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage())))
+                ;
+    }
 
 }

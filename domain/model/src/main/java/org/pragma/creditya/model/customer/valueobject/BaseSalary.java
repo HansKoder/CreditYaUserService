@@ -11,7 +11,7 @@ public class BaseSalary {
 
     private final BigDecimal amount;
 
-    private static final int LIMIT_BASE_SALARY = 15000;
+    private static final int LIMIT_BASE_SALARY = 10_000_000;
 
     public BaseSalary (BigDecimal amount) {
         this.amount = amount;

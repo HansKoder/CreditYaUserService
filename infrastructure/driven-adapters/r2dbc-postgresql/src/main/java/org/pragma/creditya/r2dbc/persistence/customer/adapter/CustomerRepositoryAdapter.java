@@ -6,6 +6,8 @@ import org.pragma.creditya.r2dbc.helper.ReactiveAdapterOperations;
 import org.pragma.creditya.r2dbc.persistence.customer.entity.CustomerEntity;
 import org.pragma.creditya.r2dbc.persistence.customer.mapper.CustomCustomerMapper;
 import org.pragma.creditya.r2dbc.persistence.customer.repository.CustomerReactiveRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
@@ -24,6 +26,8 @@ public class CustomerRepositoryAdapter extends ReactiveAdapterOperations<
         super(repository, mapper, mapper::toEntity);
     }
 
+    private Logger logger = LoggerFactory.getLogger(CustomerRepositoryAdapter.class);
+
     @Override
     public Mono<Boolean> existByEmail(String email) {
         CustomerEntity probe = new CustomerEntity();
@@ -39,5 +43,17 @@ public class CustomerRepositoryAdapter extends ReactiveAdapterOperations<
 
         return repository.exists(Example.of(probe));
 
+    }
+
+    @Override
+    public Mono<Customer> customerAllowedRequestLoan(String email, String doc) {
+        logger.info("[infra.r2dbc] (customerAllowedRequestLoan) payload [ email:{}, doc:{} ]", email, doc);
+        CustomerEntity probe = new CustomerEntity();
+        probe.setEmail(email);
+        probe.setDocument(doc);
+
+        return repository.findOne(Example.of(probe))
+                .doOnSuccess(d -> logger.info("[infra.r2dbc] (customerAllowedRequestLoan) find One, payload=[ data:{} ]", d))
+                .map(this::toEntity);
     }
 }
