@@ -69,8 +69,8 @@ public class CustomerRouterRest {
                                         .bodyValue(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()))
                         )
                         .onErrorResume(OwnerShipValidationFailedException.class, ex ->
-                                ServerResponse.status(HttpStatus.FORBIDDEN).contentType(MediaType.APPLICATION_JSON)
-                                        .bodyValue(new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage())))
+                                ServerResponse.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage())))
                 ;
     }
 

@@ -42,7 +42,8 @@ public class CustomerHandler {
         String doc = serverRequest.queryParam("document").orElse(null);
         String email = serverRequest.queryParam("email").orElse(null);
 
-        return  customerUseCase.checkCustomerIsAllowedLoan(QueryMapper.toQuery(doc, email))
+        return  Mono.fromCallable(() -> QueryMapper.toQuery(doc, email))
+                .flatMap(customerUseCase::checkCustomerIsAllowedLoan)
                 .map(CustomerMapper::toResponse)
                 .flatMap(response -> ServerResponse.status(HttpStatus.OK)
                         .bodyValue(response))

@@ -30,7 +30,9 @@ public class CustomerMapper {
         return new CustomerResponse(
                 customer.getDocument().value(),
                 customer.getEmail().value(),
-                customer.getBaseSalary().getAmount());
+                customer.getBaseSalary().getAmount(),
+                customer.getFullName().name()
+        );
     }
 
     public static ExistDocumentQuery toQuery (String document) {

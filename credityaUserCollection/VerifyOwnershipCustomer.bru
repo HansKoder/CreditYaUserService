@@ -1,0 +1,20 @@
+meta {
+  name: VerifyOwnershipCustomer
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:9081/api/v1/users/verify-ownership-customer?email=hans@gmail.com&document=222
+  body: none
+  auth: bearer
+}
+
+params:query {
+  email: hans@gmail.com
+  document: 222
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JpbkBjcmVkaXQuY29tIiwicm9sZXMiOlt7ImF1dGhvcml0eSI6IkNVU1RPTUVSIn1dLCJpYXQiOjE3NTc1Njk5MjQsImV4cCI6MTc1NzU3MzUyNH0.gnM2wP2-9nvdl680d8sriXD3xkjZEMRY8JI5yaPLsZ8
+}

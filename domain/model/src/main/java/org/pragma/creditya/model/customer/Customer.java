@@ -15,7 +15,6 @@ public class Customer extends AggregateRoot<CustomerId> {
     private final Email email;
     private final FullName fullName;
     private final BaseSalary baseSalary;
-
     private final Document document;
 
     private Phone phone;
