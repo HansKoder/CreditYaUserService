@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.pragma.creditya.api.dto.request.CreateCustomerRequest;
 import org.pragma.creditya.api.exception.InfrastructureException;
 import org.pragma.creditya.api.mapper.CustomerMapper;
+import org.pragma.creditya.api.mapper.QueryMapper;
 import org.pragma.creditya.usecase.customer.ICustomerUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,17 @@ public class CustomerHandler {
                 .switchIfEmpty(Mono.error(new InfrastructureException("Document must be mandatory")))
                 .map(CustomerMapper::toQuery)
                 .flatMap(customerUseCase::queryCustomerExistByDocument)
+                .map(CustomerMapper::toResponse)
+                .flatMap(response -> ServerResponse.status(HttpStatus.OK)
+                        .bodyValue(response))
+                .log();
+    }
+
+    public Mono<ServerResponse> verifyOwnershipCustomer (ServerRequest serverRequest) {
+        String doc = serverRequest.queryParam("document").orElse(null);
+        String email = serverRequest.queryParam("email").orElse(null);
+
+        return  customerUseCase.checkCustomerIsAllowedLoan(QueryMapper.toQuery(doc, email))
                 .map(CustomerMapper::toResponse)
                 .flatMap(response -> ServerResponse.status(HttpStatus.OK)
                         .bodyValue(response))
