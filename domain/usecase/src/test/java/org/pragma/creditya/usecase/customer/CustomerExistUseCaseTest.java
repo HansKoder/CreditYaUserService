@@ -5,22 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.pragma.creditya.model.customer.Customer;
 import org.pragma.creditya.model.customer.exception.CustomerDomainException;
 import org.pragma.creditya.model.customer.gateways.CustomerRepository;
-import org.pragma.creditya.model.customer.valueobject.CustomerId;
-import org.pragma.creditya.usecase.customer.command.CreateCustomerCommand;
+import org.pragma.creditya.usecase.customer.query.ExistDocumentQuery;
 import org.pragma.creditya.usecase.customer.query.ExistDocumentQuery;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.math.BigDecimal;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;

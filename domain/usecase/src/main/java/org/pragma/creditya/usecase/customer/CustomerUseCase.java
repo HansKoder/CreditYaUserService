@@ -5,10 +5,11 @@ import org.pragma.creditya.model.customer.Customer;
 import org.pragma.creditya.model.customer.exception.CustomerDomainException;
 import org.pragma.creditya.model.customer.exception.DocumentIsUsedByOtherCustomerException;
 import org.pragma.creditya.model.customer.exception.EmailUsedByOtherUserException;
+import org.pragma.creditya.model.customer.exception.OwnerShipValidationFailedException;
 import org.pragma.creditya.model.customer.gateways.CustomerRepository;
 import org.pragma.creditya.model.customer.valueobject.CustomerId;
-import org.pragma.creditya.model.customer.valueobject.Document;
 import org.pragma.creditya.usecase.customer.command.CreateCustomerCommand;
+import org.pragma.creditya.usecase.customer.query.VerifyOwnershipCustomerQuery;
 import org.pragma.creditya.usecase.customer.query.ExistDocumentQuery;
 import reactor.core.publisher.Mono;
 
@@ -31,6 +32,12 @@ public class CustomerUseCase implements ICustomerUseCase {
         return Mono.just(query)
                 .map(this::checkParamDocument)
                 .flatMap(customerRepository::existByDocument);
+    }
+
+    @Override
+    public Mono<Customer> checkCustomerIsAllowedLoan(VerifyOwnershipCustomerQuery query) {
+        return customerRepository.customerAllowedRequestLoan(query.email(), query.document())
+                .switchIfEmpty(Mono.error(new OwnerShipValidationFailedException("Operation Invalid")));
     }
 
     private String checkParamDocument (ExistDocumentQuery query) {

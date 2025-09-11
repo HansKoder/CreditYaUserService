@@ -40,4 +40,14 @@ public class CustomerRepositoryAdapter extends ReactiveAdapterOperations<
         return repository.exists(Example.of(probe));
 
     }
+
+    @Override
+    public Mono<Customer> customerAllowedRequestLoan(String email, String doc) {
+        CustomerEntity probe = new CustomerEntity();
+        probe.setEmail(email);
+        probe.setDocument(doc);
+
+        return repository.findOne(Example.of(probe))
+                .map(this::toEntity);
+    }
 }

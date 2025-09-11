@@ -6,6 +6,7 @@ import org.pragma.creditya.api.dto.response.ExistCustomerDocumentResponse;
 import org.pragma.creditya.model.customer.valueobject.CustomerId;
 import org.pragma.creditya.usecase.customer.command.CreateCustomerCommand;
 import org.pragma.creditya.usecase.customer.query.ExistDocumentQuery;
+import org.pragma.creditya.usecase.customer.query.ExistDocumentQuery;
 
 public class CustomerMapper {
 
