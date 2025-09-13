@@ -5,16 +5,16 @@ meta {
 }
 
 get {
-  url: http://localhost:9081/api/v1/users/verify-ownership-customer?email=hans@gmail.com&document=222
+  url: http://localhost:9081/api/v1/users/verify-ownership-customer?email=customer@gmail.com&document=114001
   body: none
   auth: bearer
 }
 
 params:query {
-  email: hans@gmail.com
-  document: 222
+  email: customer@gmail.com
+  document: 114001
 }
 
 auth:bearer {
-  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JpbkBjcmVkaXQuY29tIiwicm9sZXMiOlt7ImF1dGhvcml0eSI6IkNVU1RPTUVSIn1dLCJpYXQiOjE3NTc1ODMwODksImV4cCI6MTc1NzU4NjY4OX0.-6WYn5Uo4F6AgrjpnkMq_2Cc5RCtuTR69vjcW27TJPA
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZHZpc29yQGNyZWRpdC5jb20iLCJyb2xlcyI6W3siYXV0aG9yaXR5IjoiQURWSVNPUiJ9XSwiaWF0IjoxNzU3NzI3Mjc3LCJleHAiOjE3NTc3MzA4Nzd9.nBuEwcX-ij5XRtsmLdCDk8ewrw7Dobx4gu_S8xknGNM
 }
