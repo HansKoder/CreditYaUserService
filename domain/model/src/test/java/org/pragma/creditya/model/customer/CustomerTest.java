@@ -94,7 +94,7 @@ public class CustomerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {15001, 300000, Integer.MAX_VALUE})
+    @ValueSource(ints = {15000001, 30000000, Integer.MAX_VALUE})
     void shouldThrowExceptionWhenTheBaseSalaryIsGreaterThanLimit (int amount) {
         CustomerDomainException exception = assertThrows(CustomerDomainException.class, () -> {
             Customer.create("Jhon", "Doe", "jhon.doe@gmail.com", BigDecimal.valueOf(amount), "114233", "(57) 301-101000");
