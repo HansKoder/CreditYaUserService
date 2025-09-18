@@ -26,7 +26,7 @@ public class CustomerRepositoryAdapter extends ReactiveAdapterOperations<
         super(repository, mapper, mapper::toEntity);
     }
 
-    private Logger logger = LoggerFactory.getLogger(CustomerRepositoryAdapter.class);
+    private final Logger logger = LoggerFactory.getLogger(CustomerRepositoryAdapter.class);
 
     @Override
     public Mono<Boolean> existByEmail(String email) {
@@ -46,6 +46,27 @@ public class CustomerRepositoryAdapter extends ReactiveAdapterOperations<
     }
 
     @Override
+    public Mono<Boolean> checkAllowedRequestLoan(String email, String doc) {
+        logger.info("[infra.r2dbc] (checkAllowedRequestLoan) payload [ email:{}, doc:{} ]", email, doc);
+        CustomerEntity probe = new CustomerEntity();
+        probe.setEmail(email);
+        probe.setDocument(doc);
+
+        return repository.exists(Example.of(probe))
+                .doOnSuccess(d -> logger.info("[infra.r2dbc] (checkAllowedRequestLoan) find One, payload=[ data:{} ]", d));
+    }
+
+    @Override
+    public Mono<Customer> getCustomerByDocument(String doc) {
+        logger.info("[infra.r2dbc] (getCustomerByDocument) payload [ doc:{} ]", doc);
+        CustomerEntity probe = new CustomerEntity();
+        probe.setDocument(doc);
+
+        return repository.findOne(Example.of(probe))
+                .doOnSuccess(d -> logger.info("[infra.r2dbc] (getCustomerByDocument) find One, payload=[ data:{} ]", d))
+                .map(this::toEntity);
+    }
+
     public Mono<Customer> customerAllowedRequestLoan(String email, String doc) {
         logger.info("[infra.r2dbc] (customerAllowedRequestLoan) payload [ email:{}, doc:{} ]", email, doc);
         CustomerEntity probe = new CustomerEntity();

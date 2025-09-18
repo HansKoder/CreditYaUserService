@@ -2,16 +2,15 @@ package org.pragma.creditya.usecase.customer;
 
 import lombok.RequiredArgsConstructor;
 import org.pragma.creditya.model.customer.Customer;
-import org.pragma.creditya.model.customer.exception.CustomerDomainException;
-import org.pragma.creditya.model.customer.exception.DocumentIsUsedByOtherCustomerException;
-import org.pragma.creditya.model.customer.exception.EmailUsedByOtherUserException;
-import org.pragma.creditya.model.customer.exception.OwnerShipValidationFailedException;
+import org.pragma.creditya.model.customer.exception.*;
 import org.pragma.creditya.model.customer.gateways.CustomerRepository;
 import org.pragma.creditya.model.customer.valueobject.CustomerId;
 import org.pragma.creditya.usecase.customer.command.CreateCustomerCommand;
 import org.pragma.creditya.usecase.customer.query.VerifyOwnershipCustomerQuery;
 import org.pragma.creditya.usecase.customer.query.ExistDocumentQuery;
 import reactor.core.publisher.Mono;
+
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class CustomerUseCase implements ICustomerUseCase {
@@ -30,21 +29,27 @@ public class CustomerUseCase implements ICustomerUseCase {
     @Override
     public Mono<Boolean> queryCustomerExistByDocument(ExistDocumentQuery query) {
         return Mono.just(query)
-                .map(this::checkParamDocument)
+                .map(q -> checkParamDocument(q.document()))
                 .flatMap(customerRepository::existByDocument);
     }
 
     @Override
-    public Mono<Customer> checkCustomerIsAllowedLoan(VerifyOwnershipCustomerQuery query) {
-        return customerRepository.customerAllowedRequestLoan(query.email(), query.document())
-                .switchIfEmpty(Mono.error(new OwnerShipValidationFailedException("Operation Invalid")));
+    public Mono<Boolean> checkCustomerIsAllowedLoan(VerifyOwnershipCustomerQuery query) {
+        return customerRepository.checkAllowedRequestLoan(query.email(), query.document());
     }
 
-    private String checkParamDocument (ExistDocumentQuery query) {
-        if (query == null || query.document() == null || query.document().isBlank())
+    @Override
+    public Mono<Customer> getCustomerByDocument(String document) {
+        return Mono.fromCallable(() -> checkParamDocument(document))
+                .flatMap(customerRepository::getCustomerByDocument)
+                .switchIfEmpty(Mono.error(new CustomerDomainException("Customer " + document + " not found")));
+    }
+
+    private String checkParamDocument (String document) {
+        if (document == null ||  document.isBlank())
             throw new CustomerDomainException("Document is missed");
 
-        return query.document();
+        return document;
     }
 
     private Customer checkCustomer (CreateCustomerCommand cmd) {

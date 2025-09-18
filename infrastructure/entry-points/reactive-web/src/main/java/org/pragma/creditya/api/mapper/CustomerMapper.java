@@ -4,6 +4,7 @@ import org.pragma.creditya.api.dto.request.CreateCustomerRequest;
 import org.pragma.creditya.api.dto.response.CustomerIdResponse;
 import org.pragma.creditya.api.dto.response.CustomerResponse;
 import org.pragma.creditya.api.dto.response.ExistCustomerDocumentResponse;
+import org.pragma.creditya.api.dto.response.VerifyCustomerAllowedApplicationResponse;
 import org.pragma.creditya.model.customer.Customer;
 import org.pragma.creditya.model.customer.valueobject.CustomerId;
 import org.pragma.creditya.usecase.customer.command.CreateCustomerCommand;
@@ -41,6 +42,10 @@ public class CustomerMapper {
 
     public static ExistCustomerDocumentResponse toResponse (Boolean exist) {
         return new ExistCustomerDocumentResponse(exist);
+    }
+
+    public static VerifyCustomerAllowedApplicationResponse  verifyToResponse (Boolean exits) {
+        return new VerifyCustomerAllowedApplicationResponse(exits);
     }
 
 }

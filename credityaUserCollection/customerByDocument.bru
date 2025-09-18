@@ -1,0 +1,19 @@
+meta {
+  name: customerByDocument
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:9081/api/v1/users/document?document=114001
+  body: none
+  auth: bearer
+}
+
+params:query {
+  document: 114001
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JpbkBjcmVkaXQuY29tIiwicm9sZXMiOlt7ImF1dGhvcml0eSI6IkNVU1RPTUVSIn1dLCJpYXQiOjE3NTgxNDQ1NDIsImV4cCI6MTc1ODE0ODE0Mn0.lgb5nDkqZZkKFOALVNnyyBsW07S3LRjShS5mFslOnto
+}

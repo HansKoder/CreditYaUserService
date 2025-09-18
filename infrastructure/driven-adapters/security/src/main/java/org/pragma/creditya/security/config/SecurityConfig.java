@@ -6,6 +6,7 @@ import org.pragma.creditya.security.repository.SecurityContextRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
@@ -27,9 +28,11 @@ public class SecurityConfig {
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
-                .authorizeExchange(exchangeSpec -> exchangeSpec.pathMatchers("/api/users")
+                .authorizeExchange(exchangeSpec -> exchangeSpec.pathMatchers(HttpMethod.POST, "/api/v1/users")
                         .hasAnyAuthority("ADMIN", "ADVISOR")
-                        .pathMatchers("/api/users/exists")
+                        .pathMatchers(HttpMethod.GET, "/api/v1/users/document")
+                        .hasAnyAuthority("ADVISOR")
+                        .pathMatchers(HttpMethod.GET, "/api/v1/users/verify-ownership-customer")
                         .hasAnyAuthority("CUSTOMER")
                         .anyExchange().authenticated())
                 .addFilterAfter(jwtFilter, SecurityWebFiltersOrder.FIRST)
