@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomCustomerMapper implements CustomMapper<Customer, CustomerEntity> {
 
-    private Logger logger = LoggerFactory.getLogger(CustomCustomerMapper.class);
+    private final Logger logger = LoggerFactory.getLogger(CustomCustomerMapper.class);
 
     @Override
     public CustomerEntity toData(Customer entity) {

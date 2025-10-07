@@ -10,5 +10,6 @@ import reactor.core.publisher.Mono;
 public interface ICustomerUseCase {
     Mono<CustomerId> createCustomer(CreateCustomerCommand command);
     Mono<Boolean> queryCustomerExistByDocument (ExistDocumentQuery query);
-    Mono<Customer> checkCustomerIsAllowedLoan (VerifyOwnershipCustomerQuery query);
+    Mono<Boolean> checkCustomerIsAllowedLoan (VerifyOwnershipCustomerQuery query);
+    Mono<Customer> getCustomerByDocument (String document);
 }

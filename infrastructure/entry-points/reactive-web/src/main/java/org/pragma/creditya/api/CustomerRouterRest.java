@@ -23,12 +23,14 @@ public class CustomerRouterRest {
 
     @Bean
     public RouterFunction<ServerResponse> routerFunction(CustomerHandler handler) {
-        return route(POST("/api/users"), handler::createCustomer)
+        return route(POST("/api/v1/users"), handler::createCustomer)
                 .filter(domainErrorHandlers())
                 .filter(infrastructureErrorHandlers())
-                .andRoute(GET("/api/users/exists"), handler::existCustomerByDocument)
+                .andRoute(GET("/api/v1/users/exists"), handler::existCustomerByDocument)
                 .filter(infrastructureErrorHandlers())
                 .andRoute(GET("/api/v1/users/verify-ownership-customer"), handler::verifyOwnershipCustomer)
+                .filter(infrastructureErrorHandlers())
+                .andRoute(GET("/api/v1/users/document"), handler::getCustomerByDocument)
                 .filter(verifyOwnershipCustomerHandlerExceptions());
     }
 
