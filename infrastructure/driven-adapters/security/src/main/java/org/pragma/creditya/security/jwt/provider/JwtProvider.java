@@ -34,21 +34,6 @@ public class JwtProvider {
         this.KEY = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(UserDetails userDetails) {
-        if (Objects.isNull(userDetails))
-            return "";
-            // throw new SecurityInfraException("[infra.security] user detail is mandatory");
-
-
-        return Jwts.builder()
-                .subject(userDetails.getUsername())
-                .claim("roles", userDetails.getAuthorities())
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION))
-                .signWith(KEY, Jwts.SIG.HS256)
-                .compact();
-    }
-
     public Claims getClaims(String token) {
         return Jwts.parser()
                 .verifyWith(KEY)

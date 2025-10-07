@@ -52,6 +52,8 @@ public class CustomerHandler {
                 .doOnSuccess(q -> logger.info("[infra.reactive-web] (handler) (verifyOwnershipCustomer) payload=[ query:{} ]", q))
                 .flatMap(customerUseCase::checkCustomerIsAllowedLoan)
                 .map(CustomerMapper::verifyToResponse)
+                .doOnSuccess(response -> logger.info("[infra-reactive-web] (handler) (verify) request was executed with successful, response=[ response:{} ]", response))
+                .doOnError(err -> logger.info("[infra-reactive-web] (handler) (verify) request with unexpected error, response=[ error:{} ]", err.getMessage()))
                 .flatMap(response -> ServerResponse.status(HttpStatus.OK)
                         .bodyValue(response))
                 .log();

@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .authorizeExchange(exchangeSpec -> exchangeSpec.pathMatchers(HttpMethod.POST, "/api/v1/users")
                         .hasAnyAuthority("ADMIN", "ADVISOR")
                         .pathMatchers(HttpMethod.GET, "/api/v1/users/document")
-                        .hasAnyAuthority("ADVISOR")
+                        .hasAnyAuthority("ADVISOR", "CUSTOMER", "MACHINE")
                         .pathMatchers(HttpMethod.GET, "/api/v1/users/verify-ownership-customer")
                         .hasAnyAuthority("CUSTOMER")
                         .anyExchange().authenticated())
